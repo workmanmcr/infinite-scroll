@@ -1,13 +1,24 @@
 const imageContainer = document.getElementById('image-container');
 const loader = document.getElementById('loader')
 
+let ready = false;
+let imagesLoaded = 0;
+let totalImages = 0;
 let photosArray = [];
 
 // unsplash API 
-// const count = 10;
+// const count = 30;
 // const apiKey = 'A9PGyt_01t7OB9UMaBVs9dVOo7j88ERdApNub9WMzcg';
 // const apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${count}`;
 
+function imageLoaded() {
+  console.log('image loaded')
+  imagesLoaded++;
+  if (imagesLoaded === totalImages) {
+    ready = true; 
+    console.log('ready =', ready);
+  }
+}
 // helper function 
 function setAttributes(element, attributes) {
   for (const key in attributes) {
@@ -16,6 +27,8 @@ function setAttributes(element, attributes) {
 }
 
 function displayPhotos() {
+  totalImages = photosArray.length;
+  console.log('total images'. totalImages);
   // run function for each object 
   photosArray.forEach((photo) => {
 // create <a> to link to unsplash
@@ -33,6 +46,8 @@ function displayPhotos() {
       alt: photo.alt_description,
       title: photo.alt_description
     });
+
+    img.addEventListener('load', imageLoaded);
   // put img inside anchor element then put both inside image-container 
     item.appendChild(img);
     imageContainer.appendChild(item);
@@ -47,11 +62,12 @@ async function getPhotos() {
     displayPhotos();
   } catch (error) {
   }
-}
+};
 // check to see if scrolling near bottom of page, load more pics
 window.addEventListener('scroll', () => {
   if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000) {
-    
+    getPhotos();
+    console.log('load more')
   }
-})
+});
 getPhotos();
