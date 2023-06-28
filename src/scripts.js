@@ -4,9 +4,9 @@ const loader = document.getElementById('loader')
 let photosArray = [];
 
 // unsplash API 
-const count = 10;
-const apiKey = 'A9PGyt_01t7OB9UMaBVs9dVOo7j88ERdApNub9WMzcg';
-const apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${count}`;
+// const count = 10;
+// const apiKey = 'A9PGyt_01t7OB9UMaBVs9dVOo7j88ERdApNub9WMzcg';
+// const apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${count}`;
 
 // helper function 
 function setAttributes(element, attributes) {
@@ -50,6 +50,8 @@ async function getPhotos() {
 }
 // check to see if scrolling near bottom of page, load more pics
 window.addEventListener('scroll', () => {
-  console.log('scrolled');
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000) {
+    
+  }
 })
 getPhotos();
